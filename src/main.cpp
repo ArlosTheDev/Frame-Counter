@@ -4,11 +4,11 @@
 
 using namespace geode::prelude;
 
-class FrameCounterPopup : public Popup<>() {
+class FrameCounterPopup : public Popup {
 public:
     static FrameCounterPopup* create() {
         auto ret = new FrameCounterPopup();
-        if (ret && ret->initAnchored(280.f, 190.f)) {
+        if (ret && ret->init(280.f, 190.f)) {
             ret->autorelease();
             return ret;
         }
