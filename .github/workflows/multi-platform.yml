@@ -11,11 +11,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Geode CLI
-        uses: geode-sdk/install-geode-cli@main
+      - name: Setup Geode CLI
+        uses: geode-sdk/action@main
 
       - name: Build Mod
         run: geode build --config Release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: geode-mod
+          path: build/*.geode
