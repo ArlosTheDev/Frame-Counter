@@ -16,6 +16,9 @@ jobs:
       - name: Setup Geode CLI
         uses: geode-sdk/action@main
 
+      - name: Clean Old Build
+        run: Remove-Item -Recurse -Force build -ErrorAction SilentlyContinue
+
       - name: Build Mod
         run: geode build --config Release
 
