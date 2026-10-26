@@ -16,7 +16,7 @@ public:
         return nullptr;
     }
 
-    bool setup() override {
+    bool setup() {
         auto winSize = m_size;
 
         auto title = CCLabelBMFont::create("Frame Counter", "goldFont.fnt");
