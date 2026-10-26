@@ -6,12 +6,20 @@
 		"mac": "2.2081",
 		"ios": "2.2081"
 	},
-	"id": "hawkmc.framecounter",
-	"name": "framecounter",
+	"id": "yourname.frame-window",
+	"name": "Frame Window Counter",
 	"version": "v1.0.0",
-	"developer": "HawkMC",
-	"description": "A mod that basically heavily HEAVILY inspired by NaN GD, please check out his channel before playing my mod:)",
-	"dependencies": {
-		"geode.node-ids": ">=v1.23.3"
+	"developer": "yourname",
+	"description": "Real-time physics-tick / CBF input window counter with pitch-shifted ding feedback.",
+	"settings": {
+		"enabled": { "type": "bool", "default": true, "name": "Enabled" },
+		"ding-on-input": { "type": "bool", "default": true, "name": "Ding on input" },
+		"ding-on-update": { "type": "bool", "default": false, "name": "Ding on counter update", "description": "Plays a (throttled, 10/s) ding from the per-frame phase counter." },
+		"count-releases": { "type": "bool", "default": false, "name": "Count releases" },
+		"show-bar": { "type": "bool", "default": true, "name": "Show window bar" },
+		"volume": { "type": "float", "default": 0.6, "min": 0.0, "max": 2.0, "name": "Ding volume", "control": { "slider": true } },
+		"pitch-sharpness": { "type": "float", "default": 1.0, "min": 0.2, "max": 4.0, "name": "Pitch sharpness", "description": "<1 = pitch falls off fast near on-tick, >1 = stays high longer." },
+		"hud-scale": { "type": "float", "default": 1.0, "min": 0.3, "max": 3.0, "name": "HUD scale" },
+		"tps": { "type": "int", "default": 240, "min": 1, "max": 100000, "name": "Physics TPS", "description": "Set to match your TPS bypass value." }
 	}
 }
