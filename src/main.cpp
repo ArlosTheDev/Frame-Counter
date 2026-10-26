@@ -1,28 +1,51 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/MenuLayer.hpp>
+#include <Geode/ui/Popup.hpp>
 
 using namespace geode::prelude;
 
-class $modify(MyMenuLayer, MenuLayer) {
-    // We use a static boolean so the popup only shows ONCE when you first open the game, 
-    // not every single time you go back to the main menu from a level.
-    static inline bool hasShownPopup = false;
-
-    bool init() {
-        if (!MenuLayer::init()) return false;
-
-        if (!hasShownPopup) {
-            hasShownPopup = true;
-
-            // Trigger the classic GD popup box
-            FLAlertLayer::create(
-                "PRIVATE MOD",                                     // Title of the popup
-                "Hey!, this is a private mod, so if you get "      // Body text line 1
-                "sent this mod, you are basically on the "         // Body text line 2
-                "very rare side:)",                                // Body text line 3
-                "OK"                                               // Button text
-            )->show();
+// 1. Define your custom popup class
+class FrameCounterPopup : public Popup<> {
+public:
+    static FrameCounterPopup* create() {
+        auto ret = new FrameCounterPopup();
+        if (ret && ret->init(280.f, 190.f)) {
+            ret->autorelease();
+            return ret;
         }
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+
+    bool setup() override {
+        // Center of the popup window
+        auto winSize = m_size;
+
+        // Add a title label
+        auto title = CCLabelBMFont::create("Frame Counter", "goldFont.fnt");
+        title->setPosition({winSize.width / 2, winSize.height - 25.f});
+        title->setScale(0.7f);
+        m_mainLayer->addChild(title);
+
+        // Add some body text
+        auto label = CCLabelBMFont::create("Popup is working, let's gooo!", "chatFont.fnt");
+        label->setPosition({winSize.width / 2, winSize.height / 2});
+        label->scaleToWidth(220.f);
+        m_mainLayer->addChild(label);
+
+        return true;
+    }
+};
+
+// 2. Hook MenuLayer to trigger the popup on startup
+class $modify(MyMenuLayer, MenuLayer) {
+    bool init() {
+        if (!MenuLayer::init()) {
+            return false;
+        }
+
+        // Trigger the popup to show up when the menu loads
+        // (Note: This will pop up every time you return to the main menu for easy testing)
+        FrameCounterPopup::create()->show();
 
         return true;
     }
